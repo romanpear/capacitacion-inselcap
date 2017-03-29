@@ -25,4 +25,6 @@
 	</tbody>
 </table>
 
+{{ $datos->links() }}
+
 @endsection
