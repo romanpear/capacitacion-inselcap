@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/', 'HomeController@index3');
+Route::get('/', 'HomeController@index');
 
 Route::get('prueba', function () {
     return "Hola mundo";
@@ -23,3 +23,23 @@ Route::get('controlador2/{param}', 'HomeController@index2');
 Route::get('controlador3', 'HomeController@index3');
 
 Route::get('posts/index', 'HomeController@getPost');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+
+Route::get('protegida', function () {
+    return "Ruta protegida";
+})->middleware('auth');
+
+
+Route::get('desprotegida', function () {
+    return "Ruta desprotegida";
+});
+
+
+
+Route::get('funcion', 'HomeController@index2');
+
