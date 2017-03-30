@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Http\Requests\CreatePostRequest;
 
 class PostController extends Controller
 {
 
 	public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function index()
     {
-    	$datos = Post::paginate(5);
+        //return ;
+
+    	$datos = \Auth::user()
+                    ->posts()
+                    ->where('id',1)
+                    ->paginate(5);
 
     	return view('post.index')
     		->with('datos', $datos);
@@ -26,26 +32,60 @@ class PostController extends Controller
     	return view('post.create');
     }
 
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $post = Post::create($request->all());
+        //$post = Post::create($request->all());
+       
+        $post = new Post($request->all());
 
-        return  redirect()->route('articulos.index');
+         $user = \Auth::user();
+
+         $user->posts()->save($post);
+        /**
+         * ALguna  validacion
+         */
+        
+        //$post->save();
+
+        /*$post = Post::create([
+            'titulo'=>$request->titulo,
+            'contenido'=>$request->contenido,
+            'activo'=>$request->activo
+            ]);*/
+
+        return  redirect()
+            ->route('articulos.index')
+            ->with('message_success', 'Post guardado con exito');
     }
 
     public function edit($id)
     {
-    	return "Soy edit ".$id; 
+        $post = Post::find($id);
+
+    	return view('post.editar')
+            ->with('post', $post); 
     }
 
-    public function update($id)
+    public function update(CreatePostRequest $request,$id)
     {
-    	return "Update".$id;
+        $post = Post::find($id);
+        $post->fill($request->all());
+
+        /*$post->titulo = $request->titulo;
+        $post->contenido = $request->contenido;
+        $post->activo = $request->activo;*/
+
+         $post->save();
+
+    	return redirect()->back()->with('message_success','Se actualizo correctamente');
     }
 
     public function destroy($id)
     {
-    	return "eliminar";
+        $post = Post::find($id);
+        $post->delete();
+
+    	return redirect()->back();
     }
 
 

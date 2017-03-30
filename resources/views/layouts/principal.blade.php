@@ -66,7 +66,21 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 
+		@if(Session::has('message_success'))
+          <div class="alert alert-dismissable alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{ Session::get('message_success') }}</div>
+          @endif
 
+          @if(Session::has('message_info'))
+          <div class="alert alert-dismissable alert-info"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{ Session::get('message_info') }}</div>
+          @endif
+
+          @if(Session::has('message_warning'))
+          <div class="alert alert-dismissable alert-warning"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{ Session::get('message_warning') }}</div>
+          @endif
+
+          @if(Session::has('message_danger'))
+          <div class="alert alert-dismissable alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>{{ Session::get('message_danger') }}</div>
+          @endif
 
 	@yield('contenido')
 

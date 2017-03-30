@@ -3,12 +3,12 @@
 @section('contenido')
 <h1>Crear Post</h1>
 
+@include('parciales.message')
+
 {!! Form::open(['route' => 'articulos.store']) !!}
 
-{!! Form::text('titulo', null, ['class'=>'form-control', 'placeholder'=>'Mi titulo']) !!}
-{!! Form::text('contenido', 'Contenido', ['class'=>'form-control']) !!}
 
-{!! Form::select('activo', [true => 'Activo', false => 'Inactivo'],null,['class'=>'form-control']) !!}
+@include('parciales.formulario')
 
 
 {!! Form::submit('Registrar', ['class'=>'btn btn-primary btn-lg']) !!}
